@@ -1,5 +1,6 @@
 import 'package:contact_app/db/contactDatabaseHelper.dart';
 import 'package:contact_app/models/contact.dart';
+import 'package:contact_app/pages/contact_detail_page.dart';
 import 'package:contact_app/pages/contact_form_page.dart';
 import 'package:flutter/material.dart';
 
@@ -101,31 +102,44 @@ class _ContactListPageState extends State<ContactListPage> {
                           vertical: 6,
                         ),
                         elevation: 3,
-                        child: ListTile(
-                          leading:
-                              contact.avatar != null &&
-                                  contact.avatar!.isNotEmpty
-                              ? CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    contact.avatar!,
+                        child: GestureDetector(
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ContactDetailPage(contact: contact),
+                              ),
+                            ),
+                          },
+                          child: ListTile(
+                            leading:
+                                contact.avatar != null &&
+                                    contact.avatar!.isNotEmpty
+                                ? CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                      contact.avatar!,
+                                    ),
+                                  )
+                                : const CircleAvatar(
+                                    backgroundColor: Colors.blueAccent,
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                )
-                              : const CircleAvatar(
-                                  backgroundColor: Colors.blueAccent,
-                                  child: Icon(
-                                    Icons.person,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                          title: Text(
-                            contact.name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(contact.phone),
-                          trailing: const Icon(
-                            Icons.arrow_forward_ios,
-                            size: 16,
-                            color: Colors.grey,
+                            title: Text(
+                              contact.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Text(contact.phone),
+                            trailing: const Icon(
+                              Icons.arrow_forward_ios,
+                              size: 16,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
                       );
